@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build-Easy - Login Preview</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-orange-50 min-h-screen flex items-center justify-center p-4">
+
+  <!-- Mobile Frame -->
+  <div class="w-full max-w-md">
+    <div class="bg-white rounded-xl shadow-2xl overflow-hidden">
+
+      <!-- Status Bar -->
+      <div class="bg-gray-100 px-4 py-2 flex justify-between text-xs text-gray-600">
+        <span>9:41</span>
+        <div class="flex gap-1">
+          <span>📶</span>
+          <span>🔋</span>
+        </div>
+      </div>
+
+      <!-- Login Card Content -->
+      <div class="p-6 space-y-2 text-center">
+        <h1 class="text-3xl font-bold text-gray-900">Build-Easy</h1>
+        <p class="text-base text-gray-600">
+          현장 정산 자동화<br/>
+          장갑 끼고도 쓸 수 있는 가장 쉬운 정산 도구
+        </p>
+      </div>
+
+      <div class="px-6 pb-6">
+        <form class="space-y-6">
+          <!-- Email Input -->
+          <div class="space-y-2">
+            <label class="text-base font-medium text-gray-700">이메일</label>
+            <input
+              type="email"
+              placeholder="example@email.com"
+              class="w-full min-h-12 text-lg px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <!-- Password Input -->
+          <div class="space-y-2">
+            <label class="text-base font-medium text-gray-700">비밀번호</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              class="w-full min-h-12 text-lg px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <!-- Buttons -->
+          <div class="space-y-3">
+            <button
+              type="button"
+              class="w-full h-14 text-lg font-semibold bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+              로그인
+            </button>
+            <button
+              type="button"
+              class="w-full h-14 text-lg font-semibold border border-gray-300 bg-white text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+            >
+              회원가입
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Page Info -->
+    <div class="mt-4 text-center text-sm text-gray-600">
+      <p class="font-semibold">📱 로그인 페이지 (/login)</p>
+      <p class="text-xs mt-1">모바일 최적화 • 장갑 모드 UI</p>
+    </div>
+  </div>
+
+</body>
+</html>

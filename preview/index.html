@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build-Easy - Frontend Preview</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .phone-frame {
+      width: 320px;
+      height: 640px;
+      border-radius: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      position: relative;
+    }
+    .phone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 28px;
+      background: #000;
+      border-radius: 0 0 20px 20px;
+      z-index: 10;
+    }
+    .screen-content {
+      height: 100%;
+      overflow-y: auto;
+      padding-top: 28px;
+    }
+    .screen-content::-webkit-scrollbar {
+      width: 0;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 to-slate-800 min-h-screen p-8">
+
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-white mb-2">Build-Easy</h1>
+      <p class="text-xl text-slate-300">건설/인테리어 현장 정산 자동화 플랫폼</p>
+      <p class="text-slate-400 mt-2">프론트엔드 UI 미리보기</p>
+    </div>
+
+    <!-- Screens Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Screen 1: Login -->
+      <div class="flex flex-col items-center">
+        <div class="phone-frame bg-white">
+          <div class="phone-notch"></div>
+          <div class="screen-content bg-gradient-to-br from-blue-50 to-orange-50">
+            <div class="p-4 pt-6 h-full flex flex-col justify-center">
+              <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Build-Easy</h2>
+                <p class="text-sm text-gray-600 mt-2">현장 정산 자동화</p>
+                <p class="text-sm text-gray-600">장갑 끼고도 쓸 수 있는 가장 쉬운 정산 도구</p>
+              </div>
+              <div class="space-y-3">
+                <div>
+                  <label class="text-sm font-medium text-gray-700">이메일</label>
+                  <input type="email" placeholder="example@email.com" class="w-full h-11 text-base px-3 border rounded-md mt-1" />
+                </div>
+                <div>
+                  <label class="text-sm font-medium text-gray-700">비밀번호</label>
+                  <input type="password" placeholder="••••••••" class="w-full h-11 text-base px-3 border rounded-md mt-1" />
+                </div>
+                <button class="w-full h-12 text-base font-semibold bg-blue-600 text-white rounded-md">로그인</button>
+                <button class="w-full h-12 text-base font-semibold border rounded-md">회원가입</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 text-white font-semibold">📱 로그인</p>
+        <p class="text-slate-400 text-sm">/login</p>
+      </div>
+
+      <!-- Screen 2: Dashboard -->
+      <div class="flex flex-col items-center">
+        <div class="phone-frame bg-white">
+          <div class="phone-notch"></div>
+          <div class="screen-content bg-gray-50">
+            <!-- Header -->
+            <div class="bg-white border-b px-4 py-3">
+              <h2 class="text-lg font-bold">Build-Easy</h2>
+              <p class="text-xs text-gray-500">user@email.com</p>
+            </div>
+            <div class="p-4 space-y-3">
+              <!-- Quick Actions -->
+              <div class="grid grid-cols-2 gap-2">
+                <button class="bg-blue-600 text-white h-12 rounded-md text-sm font-semibold">+ 새 현장</button>
+                <button class="border h-12 rounded-md text-sm font-semibold">+ 영수증 등록</button>
+              </div>
+              <!-- Stats -->
+              <div class="grid grid-cols-3 gap-2">
+                <div class="bg-white p-3 rounded-lg text-center shadow-sm">
+                  <p class="text-2xl font-bold text-blue-600">3</p>
+                  <p class="text-xs text-gray-500">진행 중</p>
+                </div>
+                <div class="bg-white p-3 rounded-lg text-center shadow-sm">
+                  <p class="text-lg font-bold text-green-600">50M</p>
+                  <p class="text-xs text-gray-500">총 예산</p>
+                </div>
+                <div class="bg-white p-3 rounded-lg text-center shadow-sm">
+                  <p class="text-lg font-bold text-orange-600">12M</p>
+                  <p class="text-xs text-gray-500">지출</p>
+                </div>
+              </div>
+              <!-- Project Card -->
+              <div class="bg-white rounded-lg shadow-sm p-3">
+                <div class="flex justify-between items-start">
+                  <h3 class="font-semibold">강남구 OO 아파트</h3>
+                  <span class="text-orange-600">⚠️</span>
+                </div>
+                <div class="w-full bg-gray-200 h-2 rounded-full mt-2">
+                  <div class="bg-orange-500 h-2 rounded-full" style="width: 85%"></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">42,500,000원 / 50,000,000원</p>
+              </div>
+              <!-- Another Project -->
+              <div class="bg-white rounded-lg shadow-sm p-3">
+                <h3 class="font-semibold">서초 OO 오피스</h3>
+                <div class="w-full bg-gray-200 h-2 rounded-full mt-2">
+                  <div class="bg-blue-600 h-2 rounded-full" style="width: 35%"></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">7,000,000원 / 20,000,000원</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 text-white font-semibold">📊 대시보드</p>
+        <p class="text-slate-400 text-sm">/dashboard</p>
+      </div>
+
+      <!-- Screen 3: Receipt Scanner -->
+      <div class="flex flex-col items-center">
+        <div class="phone-frame bg-white">
+          <div class="phone-notch"></div>
+          <div class="screen-content bg-gray-50">
+            <!-- Header -->
+            <div class="bg-white border-b px-4 py-3 flex items-center">
+              <span class="mr-2">←</span>
+              <h2 class="text-lg font-bold">영수증 등록</h2>
+            </div>
+            <div class="p-4 space-y-3">
+              <!-- Camera Button -->
+              <button class="w-full h-16 text-lg bg-blue-600 text-white rounded-lg font-semibold flex items-center justify-center">
+                📷 사진 촬영 또는 선택
+              </button>
+              <!-- Image Preview Area -->
+              <div class="bg-gray-200 rounded-lg h-32 flex items-center justify-center relative">
+                <p class="text-gray-500">미리보기 영역</p>
+                <span class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">✓ 분석 완료</span>
+              </div>
+              <!-- Category -->
+              <div>
+                <label class="text-sm font-medium">분류</label>
+                <div class="grid grid-cols-5 gap-1 mt-1">
+                  <button class="h-10 rounded bg-blue-600 text-white text-xs">자재비</button>
+                  <button class="h-10 rounded bg-gray-100 text-xs">노무비</button>
+                  <button class="h-10 rounded bg-gray-100 text-xs">식대</button>
+                  <button class="h-10 rounded bg-gray-100 text-xs">유류비</button>
+                  <button class="h-10 rounded bg-gray-100 text-xs">기타</button>
+                </div>
+              </div>
+              <!-- Amount -->
+              <div>
+                <label class="text-sm font-medium">금액 (원)</label>
+                <input type="text" value="150,000" class="w-full h-11 px-3 border rounded-md mt-1" />
+                <div class="flex gap-1 mt-2">
+                  <span class="px-2 py-1 bg-gray-100 rounded text-xs">+1만</span>
+                  <span class="px-2 py-1 bg-gray-100 rounded text-xs">+5만</span>
+                  <span class="px-2 py-1 bg-gray-100 rounded text-xs">+10만</span>
+                </div>
+              </div>
+              <!-- Fixed Bottom Button -->
+              <button class="w-full h-16 text-xl font-bold bg-green-700 text-white rounded-lg">
+                저장하기
+              </button>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 text-white font-semibold">📸 영수증 OCR 스캐너</p>
+        <p class="text-slate-400 text-sm">/expenses/new</p>
+      </div>
+
+      <!-- Screen 4: Project Detail -->
+      <div class="flex flex-col items-center">
+        <div class="phone-frame bg-white">
+          <div class="phone-notch"></div>
+          <div class="screen-content bg-gray-50">
+            <!-- Header -->
+            <div class="bg-white border-b px-4 py-3 flex items-center">
+              <span class="mr-2">←</span>
+              <div>
+                <h2 class="text-lg font-bold">강남구 OO 아파트</h2>
+              </div>
+            </div>
+            <div class="p-4 space-y-3">
+              <!-- Budget Card -->
+              <div class="bg-white rounded-lg shadow p-3">
+                <h3 class="font-semibold mb-3">예산 현황</h3>
+                <div class="space-y-2">
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">총 예산</span>
+                    <span class="font-bold">50,000,000원</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">지출 합계</span>
+                    <span class="font-bold text-orange-600">42,500,000원</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">잔액</span>
+                    <span class="font-bold text-green-600">7,500,000원</span>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-200 h-3 rounded-full mt-2">
+                  <div class="bg-orange-500 h-3 rounded-full" style="width: 85%"></div>
+                </div>
+                <p class="text-xs text-center text-gray-500 mt-1">85% 사용</p>
+              </div>
+              <!-- Expenses Breakdown -->
+              <div class="bg-white rounded-lg shadow p-3">
+                <h3 class="font-semibold mb-2">지출 내역</h3>
+                <div class="space-y-2">
+                  <div class="flex justify-between items-center p-2 bg-blue-50 rounded">
+                    <span class="flex items-center text-sm">
+                      <span class="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>자재비
+                    </span>
+                    <span class="font-semibold text-sm">25,000,000원</span>
+                  </div>
+                  <div class="flex justify-between items-center p-2 bg-orange-50 rounded">
+                    <span class="flex items-center text-sm">
+                      <span class="w-2 h-2 bg-orange-600 rounded-full mr-2"></span>노무비
+                    </span>
+                    <span class="font-semibold text-sm">12,500,000원</span>
+                  </div>
+                  <div class="flex justify-between items-center p-2 bg-green-50 rounded">
+                    <span class="flex items-center text-sm">
+                      <span class="w-2 h-2 bg-green-600 rounded-full mr-2"></span>식대
+                    </span>
+                    <span class="font-semibold text-sm">3,000,000원</span>
+                  </div>
+                  <div class="flex justify-between items-center p-2 bg-red-50 rounded">
+                    <span class="flex items-center text-sm">
+                      <span class="w-2 h-2 bg-red-600 rounded-full mr-2"></span>유류비
+                    </span>
+                    <span class="font-semibold text-sm">2,000,000원</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 text-white font-semibold">📈 프로젝트 상세</p>
+        <p class="text-slate-400 text-sm">/projects/[id]</p>
+      </div>
+
+      <!-- Screen 5: Labor Calendar -->
+      <div class="flex flex-col items-center">
+        <div class="phone-frame bg-white">
+          <div class="phone-notch"></div>
+          <div class="screen-content bg-gray-50">
+            <!-- Header -->
+            <div class="bg-white border-b px-4 py-3 flex items-center justify-between">
+              <div class="flex items-center">
+                <span class="mr-2">←</span>
+                <h2 class="text-lg font-bold">출근 체크</h2>
+              </div>
+              <button class="text-orange-600 text-xs font-semibold">📥 CSV</button>
+            </div>
+            <div class="p-4 space-y-3">
+              <!-- Month Selector -->
+              <div class="bg-white rounded-lg p-3">
+                <div class="flex justify-between items-center mb-3">
+                  <button class="px-3 py-1 border rounded">←</button>
+                  <span class="font-bold">2025년 1월</span>
+                  <button class="px-3 py-1 border rounded">→</button>
+                </div>
+                <!-- Calendar Grid -->
+                <div class="grid grid-cols-7 gap-1 text-center text-xs mb-2">
+                  <span class="text-red-600">일</span>
+                  <span>월</span>
+                  <span>화</span>
+                  <span>수</span>
+                  <span>목</span>
+                  <span class="text-blue-600">토</span>
+                </div>
+                <div class="grid grid-cols-7 gap-1 text-xs">
+                  <span class="text-red-600 py-1">1</span>
+                  <span class="py-1">2</span>
+                  <span class="py-1">3</span>
+                  <span class="bg-blue-600 text-white rounded py-1">4</span>
+                  <span class="py-1">5</span>
+                  <span class="py-1">6</span>
+                  <span class="text-blue-600 py-1">7</span>
+                  <span class="text-red-600 py-1">8</span>
+                  <span class="py-1">9</span>
+                  <span class="py-1 relative">10<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-orange-500 rounded-full"></span></span>
+                  <span class="py-1">11</span>
+                </div>
+              </div>
+              <!-- Worker List -->
+              <div class="bg-white rounded-lg p-3">
+                <h3 class="font-semibold mb-2">1월 4일 (토) 출근 현황</h3>
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between p-2 border rounded">
+                    <div>
+                      <p class="font-semibold text-sm">홍길동</p>
+                      <p class="text-xs text-gray-500">일당: 150,000원</p>
+                    </div>
+                    <div class="flex gap-1">
+                      <button class="px-3 py-2 border rounded text-xs">0.5공수</button>
+                      <button class="px-3 py-2 bg-blue-600 text-white rounded text-xs">1공수</button>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between p-2 border rounded">
+                    <div>
+                      <p class="font-semibold text-sm">김철수</p>
+                      <p class="text-xs text-gray-500">일당: 180,000원</p>
+                    </div>
+                    <div class="flex gap-1">
+                      <button class="px-3 py-2 border rounded text-xs">0.5공수</button>
+                      <button class="px-3 py-2 bg-blue-600 text-white rounded text-xs">1공수</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 text-white font-semibold">📅 노무 출근 체크</p>
+        <p class="text-slate-400 text-sm">/projects/[id]/labor/check</p>
+      </div>
+
+      <!-- Screen 6: Workers -->
+      <div class="flex flex-col items-center">
+        <div class="phone-frame bg-white">
+          <div class="phone-notch"></div>
+          <div class="screen-content bg-gray-50">
+            <!-- Header -->
+            <div class="bg-white border-b px-4 py-3 flex items-center justify-between">
+              <div class="flex items-center">
+                <span class="mr-2">←</span>
+                <h2 class="text-lg font-bold">작업자 관리</h2>
+              </div>
+              <button class="bg-blue-600 text-white px-3 py-2 rounded text-sm">+ 등록</button>
+            </div>
+            <div class="p-4 space-y-3">
+              <!-- Worker Card 1 -->
+              <div class="bg-white rounded-lg shadow p-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+                      <span class="text-orange-600 font-bold">홍</span>
+                    </div>
+                    <div>
+                      <p class="font-semibold">홍길동</p>
+                      <p class="text-xs text-gray-500">010-1234-5678</p>
+                    </div>
+                  </div>
+                  <p class="text-orange-600 font-bold">150,000원</p>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">일당: 150,000원</p>
+              </div>
+              <!-- Worker Card 2 -->
+              <div class="bg-white rounded-lg shadow p-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+                      <span class="text-orange-600 font-bold">김</span>
+                    </div>
+                    <div>
+                      <p class="font-semibold">김철수</p>
+                      <p class="text-xs text-gray-500">010-9876-5432</p>
+                    </div>
+                  </div>
+                  <p class="text-orange-600 font-bold">180,000원</p>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">일당: 180,000원</p>
+              </div>
+              <!-- Worker Card 3 -->
+              <div class="bg-white rounded-lg shadow p-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+                      <span class="text-orange-600 font-bold">이</span>
+                    </div>
+                    <div>
+                      <p class="font-semibold">이민수</p>
+                      <p class="text-xs text-gray-500">미등록</p>
+                    </div>
+                  </div>
+                  <p class="text-orange-600 font-bold">200,000원</p>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">일당: 200,000원</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 text-white font-semibold">👷 작업자 목록</p>
+        <p class="text-slate-400 text-sm">/workers</p>
+      </div>
+
+    </div>
+
+    <!-- Footer Info -->
+    <div class="mt-12 text-center text-slate-400">
+      <p class="text-lg font-semibold text-white mb-4">🎨 "장갑 모드" UI 특징</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+        <div class="bg-slate-800 rounded-lg p-4">
+          <p class="font-bold text-white mb-2">📏 큰 터치 타겟</p>
+          <p>버튼: h-14 (56px)</p>
+          <p>입력: min-h-12 (48px)</p>
+        </div>
+        <div class="bg-slate-800 rounded-lg p-4">
+          <p class="font-bold text-white mb-2">🎨 색상 코딩</p>
+          <p>자재비: 파랑색</p>
+          <p>노무비: 주황색</p>
+          <p>식대: 초록색</p>
+        </div>
+        <div class="bg-slate-800 rounded-lg p-4">
+          <p class="font-bold text-white mb-2">⚡ 최소한 입력</p>
+          <p>OCR 자동 입력</p>
+          <p>빠른 선택 칩</p>
+          <p>달력 피커</p>
+        </div>
+      </div>
+      <p class="mt-6 text-xs">
+        dev server: <span class="text-green-400">http://localhost:3000</span>
+      </p>
+    </div>
+
+  </div>
+
+</body>
+</html>

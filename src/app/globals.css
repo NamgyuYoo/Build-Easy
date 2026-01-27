@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: oklch(0.627 0.265 253.1);
+  --color-primary-foreground: oklch(0.985 0.002 253.1);
+
+  --color-secondary: oklch(0.961 0.013 253.1);
+  --color-secondary-foreground: oklch(0.462 0.026 253.1);
+
+  --color-muted: oklch(0.961 0.013 253.1);
+  --color-muted-foreground: oklch(0.555 0.016 253.1);
+
+  --color-accent: oklch(0.961 0.013 253.1);
+  --color-accent-foreground: oklch(0.462 0.026 253.1);
+
+  --color-destructive: oklch(0.577 0.247 25.1);
+  --color-destructive-foreground: oklch(0.985 0.002 253.1);
+
+  --color-border: oklch(0.914 0.013 253.1);
+  --color-input: oklch(0.914 0.013 253.1);
+  --color-ring: oklch(0.627 0.265 253.1);
+
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.011 253.1);
+
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.145 0.011 253.1);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.011 253.1);
+
+  --radius: 0.5rem;
+}
+
+/* Gloves-on Mode: Extra large touch targets */
+.gloves-button {
+  @apply h-14 min-h-14 text-lg font-semibold;
+}
+
+/* Color coding for expenses */
+.expense-material {
+  @apply bg-blue-50 border-blue-200 text-blue-800;
+}
+
+.expense-labor {
+  @apply bg-orange-50 border-orange-200 text-orange-800;
+}
+
+.expense-food {
+  @apply bg-green-50 border-green-200 text-green-800;
+}
+
+.expense-fuel {
+  @apply bg-red-50 border-red-200 text-red-800;
+}

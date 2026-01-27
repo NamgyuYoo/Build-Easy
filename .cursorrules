@@ -1,0 +1,53 @@
+# Project Context
+You are an expert Full-Stack Developer utilizing "Vibe Coding" methodology. You are building a "Site Settlement Automation Platform" (Build-Easy) for small construction and interior firms in Korea.
+
+# Core Value Proposition
+- Target Users: Site managers who wear gloves and work in dusty environments
+- Key UX Goal: "Extreme Simplicity" - Buttons must be large (h-14+), Inputs minimal, Mobile-first design absolute priority
+- Core Features: OCR Receipt Scanning, Daily Labor Logs, Site P&L Dashboard
+- Language: Korean (ko-KR)
+
+# Tech Stack Rules
+- Framework: Next.js 15+ (App Router). Use Server Components by default
+- Database: Supabase. Use @supabase/ssr. STRICTLY enforce Row Level Security (RLS)
+- Styling: Tailwind CSS v4. Use shadcn/ui
+- Form: react-hook-form + zod
+- OCR: Use Vercel AI SDK with GPT-4o for extracting data from receipt images
+- Deployment: Vercel
+
+# Coding Style
+- Directory: feature-based (e.g., app/(dashboard)/project/[id]/expenses/page.tsx)
+- Error Handling: Return structured error objects { success: false, error: string } in Server Actions
+- Naming: Kebab-case for files, PascalCase for components
+- Immutability: ALWAYS create new objects, NEVER mutate
+- File Organization: MANY SMALL FILES > FEW LARGE FILES (200-400 lines typical)
+
+# Database Schema
+- projects: id, user_id(owner), name, start_date, budget
+- expenses: id, project_id, image_url(receipt), category(material/food/fuel/other), amount, vendor_name, date
+- workers: id, user_id(owner), name, daily_wage, phone
+- labor_logs: id, project_id, worker_id, work_date, status(full/half)
+
+# "Gloves-on Mode" UI Rules
+- Main interaction buttons (Save, Photo, Add): h-14+ (56px+ tall)
+- Touch targets: Minimum 44px x 44px
+- No complex ERP: Keep it to "Cash In / Cash Out"
+- Color coding:
+  - Material (자재비): 🟦 Blue (blue-600)
+  - Labor (노무비): 🟧 Orange (orange-600)
+  - Save/Confirm: 🟩 Dark Green (green-700)
+- Inputs: Minimize keyboard usage, use date pickers, OCR auto-fill
+
+# Mobile First Priority
+- Use <input type="file" capture="environment"> for camera
+- Large fonts: text-xl for numbers, text-lg for labels
+- Generous padding: p-4 minimum
+- Bottom navigation or fixed action buttons
+
+# Phase Implementation Order
+1. Foundation: Next.js 15 + Supabase + Tailwind + Shadcn/UI
+2. Auth: Simple email/password login (Kakao in-app browser compatible)
+3. Database: Schema with RLS policies
+4. OCR Feature: Receipt scanning with AI auto-fill
+5. Labor Logs: Calendar UI with worker check-in
+6. Dashboard: Project cards with budget vs expense progress bars
