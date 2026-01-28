@@ -49,7 +49,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    console.error("Project creation error:", error);
     return NextResponse.json(
       { error: "프로젝트 생성 중 오류가 발생했습니다" },
       { status: 500 }
@@ -88,7 +87,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ success: true, projects: data });
   } catch (error) {
-    console.error("Projects fetch error:", error);
     return NextResponse.json(
       { error: "프로젝트 조회 중 오류가 발생했습니다" },
       { status: 500 }

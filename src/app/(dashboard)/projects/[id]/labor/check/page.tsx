@@ -50,7 +50,6 @@ export default function LaborCheckPage({
       const logsData = await logsRes.json();
       setLaborLogs(logsData.laborLogs || []);
     } catch (error) {
-      console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
@@ -98,7 +97,6 @@ export default function LaborCheckPage({
         });
       }
     } catch (error) {
-      console.error("Error checking in:", error);
       toast({
         title: "체크 오류",
         description: "네트워크 오류가 발생했습니다",
@@ -135,7 +133,6 @@ export default function LaborCheckPage({
         });
       }
     } catch (error) {
-      console.error("Error removing log:", error);
       toast({
         title: "삭제 오류",
         description: "네트워크 오류가 발생했습니다",

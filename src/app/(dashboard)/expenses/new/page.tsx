@@ -69,7 +69,6 @@ function NewExpensePage() {
           }
         }
       } catch (error) {
-        console.error("Failed to fetch projects:", error);
       }
     };
     fetchProjects();

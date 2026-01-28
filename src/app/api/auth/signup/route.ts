@@ -23,8 +23,7 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createClient();
 
-    console.log("Attempting signup for:", email);
-    console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 20));
+
 
     // 회원가입만 수행 (자동 로그인 제거)
     const { data, error } = await supabase.auth.signUp({
@@ -38,11 +37,9 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log("Signup response:", { data, error });
+
 
     if (error) {
-      console.error("Supabase signup error:", error);
-
       if (error.message.includes("User already registered")) {
         return NextResponse.json(
           { error: "이미 가입된 이메일입니다. 로그인을 해주세요." },
@@ -62,7 +59,6 @@ export async function POST(request: NextRequest) {
       user: data.user,
     });
   } catch (error) {
-    console.error("Signup error:", error);
     return NextResponse.json(
       { error: "회원가입 처리 중 오류가 발생했습니다: " + (error instanceof Error ? error.message : String(error)) },
       { status: 500 }

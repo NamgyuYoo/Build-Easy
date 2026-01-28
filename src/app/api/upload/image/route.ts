@@ -51,7 +51,6 @@ export async function POST(request: NextRequest) {
       .upload(fileName, file);
 
     if (uploadError) {
-      console.error("Upload error:", uploadError);
       return NextResponse.json(
         { error: "이미지 업로드에 실패했습니다" },
         { status: 500 }
@@ -69,7 +68,6 @@ export async function POST(request: NextRequest) {
       path: fileName,
     });
   } catch (error) {
-    console.error("Image upload error:", error);
     return NextResponse.json(
       { error: "이미지 업로드 중 오류가 발생했습니다" },
       { status: 500 }

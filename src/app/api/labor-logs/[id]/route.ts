@@ -45,7 +45,6 @@ export async function DELETE(
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Labor log deletion error:", error);
     return NextResponse.json(
       { error: "노무 기록 삭제 중 오류가 발생했습니다" },
       { status: 500 }

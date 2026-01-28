@@ -107,7 +107,6 @@ export async function GET(
       },
     });
   } catch (error) {
-    console.error("Labor export error:", error);
     return NextResponse.json(
       { error: "노무비 대장 내보내기 중 오류가 발생했습니다" },
       { status: 500 }

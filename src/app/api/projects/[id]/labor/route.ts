@@ -48,7 +48,6 @@ export async function GET(
 
     return NextResponse.json({ success: true, laborLogs });
   } catch (error) {
-    console.error("Labor logs fetch error:", error);
     return NextResponse.json(
       { error: "노무 기록 조회 중 오류가 발생했습니다" },
       { status: 500 }

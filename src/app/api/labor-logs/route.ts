@@ -96,7 +96,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    console.error("Labor log creation error:", error);
     return NextResponse.json(
       { error: "출근 체크 중 오류가 발생했습니다" },
       { status: 500 }

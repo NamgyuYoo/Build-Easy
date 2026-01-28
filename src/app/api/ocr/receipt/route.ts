@@ -81,7 +81,6 @@ JSON 형식으로 응답해주세요. 확실하지 않은 정보는 null로 반�
       },
     });
   } catch (error) {
-    console.error("OCR error:", error);
     return NextResponse.json(
       {
         error: "OCR 처리 중 오류가 발생했습니다",
