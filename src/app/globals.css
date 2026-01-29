@@ -3,31 +3,55 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-primary: oklch(0.627 0.265 253.1);
-  --color-primary-foreground: oklch(0.985 0.002 253.1);
+  /* Category Color Tokens (business-critical) */
+  /* Material (자재비) - Blue */
+  --color-category-material-50: oklch(0.97 0.01 264);
+  --color-category-material-100: oklch(0.93 0.03 264);
+  --color-category-material-500: oklch(0.55 0.22 264);
+  --color-category-material-700: oklch(0.45 0.20 264);
 
+  /* Labor (노무비) - Orange */
+  --color-category-labor-50: oklch(0.97 0.01 45);
+  --color-category-labor-100: oklch(0.93 0.03 45);
+  --color-category-labor-500: oklch(0.65 0.20 45);
+  --color-category-labor-700: oklch(0.55 0.18 45);
+
+  /* Food (식대) - Green */
+  --color-category-food-50: oklch(0.97 0.01 145);
+  --color-category-food-100: oklch(0.93 0.03 145);
+  --color-category-food-500: oklch(0.65 0.18 145);
+  --color-category-food-700: oklch(0.55 0.16 145);
+
+  /* Fuel (유류비) - Red */
+  --color-category-fuel-50: oklch(0.97 0.01 25);
+  --color-category-fuel-100: oklch(0.93 0.03 25);
+  --color-category-fuel-500: oklch(0.55 0.22 25);
+  --color-category-fuel-700: oklch(0.45 0.20 25);
+
+  /* Semantic tokens map to category colors */
+  --color-primary: var(--color-category-material-500);
+  --color-success: var(--color-category-food-500);
+  --color-warning: oklch(0.80 0.15 85);
+  --color-error: var(--color-category-fuel-500);
+  --color-info: var(--color-category-material-500);
+
+  /* Base colors */
+  --color-primary-foreground: oklch(0.985 0.002 253.1);
   --color-secondary: oklch(0.961 0.013 253.1);
   --color-secondary-foreground: oklch(0.462 0.026 253.1);
-
   --color-muted: oklch(0.961 0.013 253.1);
   --color-muted-foreground: oklch(0.555 0.016 253.1);
-
   --color-accent: oklch(0.961 0.013 253.1);
   --color-accent-foreground: oklch(0.462 0.026 253.1);
-
   --color-destructive: oklch(0.577 0.247 25.1);
   --color-destructive-foreground: oklch(0.985 0.002 253.1);
-
   --color-border: oklch(0.914 0.013 253.1);
   --color-input: oklch(0.914 0.013 253.1);
   --color-ring: oklch(0.627 0.265 253.1);
-
   --color-background: oklch(1 0 0);
   --color-foreground: oklch(0.145 0.011 253.1);
-
   --color-card: oklch(1 0 0);
   --color-card-foreground: oklch(0.145 0.011 253.1);
-
   --color-popover: oklch(1 0 0);
   --color-popover-foreground: oklch(0.145 0.011 253.1);
 
@@ -164,6 +188,12 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Dark mode category colors (lighter for contrast) */
+  --color-category-material-500: oklch(0.65 0.22 264);
+  --color-category-labor-500: oklch(0.75 0.20 45);
+  --color-category-food-500: oklch(0.75 0.18 145);
+  --color-category-fuel-500: oklch(0.65 0.22 25);
 }
 
 @layer base {
