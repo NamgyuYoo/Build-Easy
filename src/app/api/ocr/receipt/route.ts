@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import OpenAI from "openai";
+import Tesseract from "tesseract.js";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,78 +15,122 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Initialize OpenAI client with API key
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) {
-      return NextResponse.json(
-        { error: "OpenAI API 키가 설정되지 않았습니다" },
-        { status: 500 }
-      );
-    }
-
-    const openai = new OpenAI({ apiKey });
-
-    // Convert file to base64
+    // Convert file to buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const base64Image = buffer.toString("base64");
-    const mimeType = file.type;
-    const dataUrl = `data:${mimeType};base64,${base64Image}`;
 
-    // Use GPT-4o Vision to extract receipt data
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "text",
-              text: `이 영수증에서 다음 정보를 추출해주세요:
-1. 총 금액 (amount) - 숫자만, 콤마 없이
-2. 거래처명 (vendor_name) - 상점 이름
-3. 날짜 (date) - YYYY-MM-DD 형식
-4. 카테고리 (category) - 다음 중 하나: material(자재), food(식사/음식), fuel(주유), labor(인건비), other(기타)
+    console.log("Starting OCR with Tesseract.js...");
 
-JSON 형식으로 응답해주세요. 확실하지 않은 정보는 null로 반환하세요.`,
-            },
-            {
-              type: "image_url",
-              image_url: {
-                url: dataUrl,
-              },
-            },
-          ],
-        },
-      ],
-      max_tokens: 500,
+    // Perform OCR with Korean and English language support
+    const result = await Tesseract.recognize(buffer, "kor+eng", {
+      logger: (m: any) => {
+        if (m.status === "recognizing text") {
+          console.log(`OCR Progress: ${Math.round(m.progress * 100)}%`);
+        }
+      },
     });
 
-    const content = response.choices[0]?.message?.content || "{}";
-    const jsonMatch = content.match(/\{[\s\S]*\}/);
+    console.log("OCR complete. Extracting structured data...");
 
-    if (!jsonMatch) {
-      throw new Error("AI 응답 파싱 실패");
-    }
+    const text = result.data.text;
+    console.log("Extracted text:", text);
 
-    const extracted = JSON.parse(jsonMatch[0]);
+    // Parse extracted text to get structured data
+    const extracted = parseReceiptText(text);
 
     return NextResponse.json({
       success: true,
-      extracted: {
-        amount: extracted.amount || "",
-        vendor_name: extracted.vendor_name || "",
-        date: extracted.date || "",
-        category: extracted.category || "other",
-      },
+      extracted,
     });
   } catch (error) {
+    console.error("OCR Error:", error);
+
     return NextResponse.json(
       {
         error: "OCR 처리 중 오류가 발생했습니다",
+        details: error instanceof Error ? error.message : String(error),
         extracted: {},
       },
       { status: 500 }
     );
   }
+}
+
+/**
+ * Parse receipt text to extract structured data
+ */
+function parseReceiptText(text: string) {
+  const lines = text.split("\n").filter((line) => line.trim());
+
+  let amount = "";
+  let vendorName = "";
+  let date = "";
+  let category = "other";
+
+  // Extract vendor name (usually first non-empty line)
+  for (const line of lines) {
+    const cleaned = line.trim();
+    if (cleaned && cleaned.length > 2 && !cleaned.match(/^\d/)) {
+      vendorName = cleaned.substring(0, 50); // Limit length
+      break;
+    }
+  }
+
+  // Extract date (YYYY-MM-DD, YYYY/MM/DD, or YY.MM.DD format)
+  const datePatterns = [
+    /(\d{4})[-./](\d{1,2})[-./](\d{1,2})/, // YYYY-MM-DD
+    /(\d{2})[-./](\d{1,2})[-./](\d{1,2})/, // YY-MM-DD
+  ];
+
+  for (const pattern of datePatterns) {
+    const match = text.match(pattern);
+    if (match) {
+      const year = match[1].length === 2 ? "20" + match[1] : match[1];
+      const month = match[2].padStart(2, "0");
+      const day = match[3].padStart(2, "0");
+      date = `${year}-${month}-${day}`;
+      break;
+    }
+  }
+
+  // Extract amount (look for numbers with commas, "원", "won", etc.)
+  const amountPatterns = [
+    /(?:합계|총액|금액|AMOUNT)[:\s]*([₩$]?\s*[\d,]+(?:\.\d{2})?)/i,
+    /([₩$]?\s*[\d,]+(?:\.\d{2})?)\s*(?:원|won)/i,
+    /(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)/, // General number format
+  ];
+
+  for (const pattern of amountPatterns) {
+    const matches = text.matchAll(new RegExp(pattern.source, pattern.flags.includes("g") ? "g" : ""));
+    for (const match of matches) {
+      const amountStr = match[1] || match[0];
+      // Clean up the amount string
+      const cleanAmount = amountStr.replace(/[^\d.]/g, "");
+      if (cleanAmount && parseFloat(cleanAmount) > 0) {
+        amount = cleanAmount;
+        break;
+      }
+    }
+    if (amount) break;
+  }
+
+  // Detect category based on keywords
+  const textLower = text.toLowerCase();
+
+  if (textLower.includes("주유") || textLower.includes("기름") || textLower.includes("휘발유") || textLower.includes("경유") || textLower.includes("주유소")) {
+    category = "fuel"; // 유류
+  } else if (textLower.includes("식") || textLower.includes("밥") || textLower.includes("커피") || textLower.includes("카페") || textLower.includes("맛집") || textLower.includes("식당")) {
+    category = "food"; // 식대
+  } else if (textLower.includes("자재") || textLower.includes("재료") || textLower.includes("철물") || textLower.includes("목재") || textLower.includes("시멘트")) {
+    category = "material"; // 자재
+  } else if (textLower.includes("인건") || textLower.includes("임금") || textLower.includes("노무") || textLower.includes("일당")) {
+    category = "labor"; // 인건비
+  }
+
+  return {
+    amount,
+    vendor_name: vendorName,
+    date,
+    category,
+  };
 }

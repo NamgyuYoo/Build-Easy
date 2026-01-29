@@ -43,3 +43,8 @@ next-env.d.ts
 
 # temp files
 nul
+.agent/
+public/
+scripts/
+venv/
+*.jpg
