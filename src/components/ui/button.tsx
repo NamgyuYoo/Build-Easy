@@ -19,11 +19,11 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover-capable:underline",
       },
       size: {
-        default: "h-10 px-4 py-2 pointer-coarse:h-14 pointer-coarse:px-6 pointer-coarse:py-3 touch-primary",
-        sm: "h-9 px-3 rounded-md text-xs pointer-coarse:h-12 pointer-coarse:px-5",
-        lg: "h-11 px-8 rounded-md pointer-coarse:h-14 pointer-coarse:px-10 touch-primary",
-        xl: "h-14 rounded-md px-8 text-lg pointer-coarse:h-14 pointer-coarse:px-10 touch-primary", // Gloves-on mode
-        icon: "h-10 w-10 pointer-coarse:h-14 pointer-coarse:w-14",
+        default: "mouse:h-10 mouse:px-4 mouse:py-2 touch:h-14 touch:px-6 touch:py-3 touch-primary",
+        sm: "mouse:h-9 mouse:px-3 touch:h-12 touch:px-5 rounded-md text-xs",
+        lg: "mouse:h-10 mouse:px-8 touch:h-14 touch:px-10 rounded-md touch-primary",
+        xl: "h-14 rounded-md px-8 text-lg touch:px-10 touch-primary", // Gloves-on mode - always 56px
+        icon: "mouse:h-10 mouse:w-10 touch:h-14 touch:w-14",
       },
     },
     defaultVariants: {
