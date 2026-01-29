@@ -11,6 +11,43 @@
   }
 }
 
+/*
+ * POINTER PRECISION ADAPTIVE STYLES
+ *
+ * Since @custom-variant doesn't work with pointer media queries in Tailwind v4,
+ * we use standard CSS with @layer utilities to create pointer-aware classes.
+ * Use these classes directly in components alongside Tailwind utilities.
+ *
+ * Touch devices (pointer: coarse): Apply larger sizes
+ * Mouse devices (pointer: fine): Apply normal sizes
+ */
+
+@layer utilities {
+  /* Touch device optimizations (coarse pointer = touch) */
+  @media (pointer: coarse) {
+    .touch\:h-14 { height: 3.5rem; }
+    .touch\:h-12 { height: 3rem; }
+    .touch\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .touch\:px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .touch\:px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .touch\:py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .touch\:py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+    .touch\:w-14 { width: 3.5rem; }
+    .touch\:text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .touch\:text-base { font-size: 1rem; line-height: 1.5rem; }
+  }
+
+  /* Mouse device optimizations (fine pointer = mouse) */
+  @media (pointer: fine) {
+    .mouse\:h-10 { height: 2.5rem; }
+    .mouse\:h-9 { height: 2.25rem; }
+    .mouse\:px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .mouse\:px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+    .mouse\:py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .mouse\:w-10 { width: 2.5rem; }
+  }
+}
+
 @theme {
   /* Category Color Tokens (business-critical) */
   /* Construction-optimized colors - higher chroma for sunlight visibility */
