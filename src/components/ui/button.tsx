@@ -8,22 +8,22 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+          "bg-primary text-primary-foreground shadow hover-capable:bg-primary/90",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+          "bg-destructive text-destructive-foreground shadow-sm hover-capable:bg-destructive/90",
         outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-input bg-background shadow-sm hover-capable:bg-accent hover-capable:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-secondary text-secondary-foreground shadow-sm hover-capable:bg-secondary/80",
+        ghost: "hover-capable:bg-accent hover-capable:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover-capable:underline",
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
-        xl: "h-14 rounded-md px-8 text-lg", // Gloves-on mode
-        icon: "h-9 w-9",
+        default: "h-10 px-4 py-2 pointer-coarse:h-14 pointer-coarse:px-6 pointer-coarse:py-3 touch-primary",
+        sm: "h-9 px-3 rounded-md text-xs pointer-coarse:h-12 pointer-coarse:px-5",
+        lg: "h-11 px-8 rounded-md pointer-coarse:h-14 pointer-coarse:px-10 touch-primary",
+        xl: "h-14 rounded-md px-8 text-lg pointer-coarse:h-14 pointer-coarse:px-10 touch-primary", // Gloves-on mode
+        icon: "h-10 w-10 pointer-coarse:h-14 pointer-coarse:w-14",
       },
     },
     defaultVariants: {
