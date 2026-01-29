@@ -126,9 +126,38 @@
   --radius: 0.5rem;
 }
 
-/* Gloves-on Mode: Extra large touch targets */
-.gloves-button {
-  @apply h-14 min-h-14 text-lg font-semibold;
+/* Touch target enforcement (utilities cannot override minimums) */
+@layer components {
+  /* Standard touch target - WCAG 2.5.8 compliant (44px minimum) */
+  .touch-safe {
+    min-height: 44px;
+    min-width: 44px;
+    /* Prevent utility classes from shrinking below minimum */
+    &.h-8, &.h-9, &.h-10, &.h-11 {
+      min-height: 44px !important;
+      min-width: 44px !important;
+    }
+  }
+
+  /* Primary action - gloves-on mode (56px minimum per CLAUDE.md) */
+  .touch-primary {
+    min-height: 56px;
+    min-width: 56px;
+    /* Enforce gloves-on minimum even with smaller utilities */
+    &.h-10, &.h-11, &.h-12, &.h-14 {
+      min-height: 56px !important;
+      min-width: 56px !important;
+    }
+  }
+
+  /* Input fields - 48px minimum per CLAUDE.md requirements */
+  .input-safe {
+    min-height: 48px;
+    /* Prevent utilities from shrinking input below usable size */
+    &.h-8, &.h-9, &.h-10 {
+      min-height: 48px !important;
+    }
+  }
 }
 
 /* Color coding for expenses */
