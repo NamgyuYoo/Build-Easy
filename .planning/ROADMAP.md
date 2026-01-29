@@ -59,12 +59,12 @@ Plans:
 4. Construction-optimized layout maintains visibility in outdoor/dusty environments
 5. No touch target shrinks below 44px minimum (anti-pattern enforcement)
 
-**Plans**: TBD
+**Plans**: 3 plans in 3 waves
 
 Plans:
-- [ ] 02-01: Implement @custom-variant for touch/mouse detection using @media (pointer)
-- [ ] 02-02: Create adaptive hover states with @media (hover: hover) guards
-- [ ] 02-03: Enforce touch target size constraints (56px primary, 44px all interactive)
+- [ ] 02-01-PLAN.md — Upgrade Tailwind CSS to v4.1.18 for native pointer-coarse/pointer-fine variants
+- [ ] 02-02-PLAN.md — Create adaptive CSS infrastructure with hover-capable variant and touch target enforcement components
+- [ ] 02-03-PLAN.md — Apply adaptive sizing to Button, Input, and Select components with touch/mouse detection
 
 ### Phase 3: Component Architecture
 
