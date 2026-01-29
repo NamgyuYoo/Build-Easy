@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { format, parseISO, isSameMonth, subMonths, addMonths } from "date-fns";
 import { ko } from "date-fns/locale";
-import { ArrowLeft, Trash2, Plus, Filter, Calendar as CalendarIcon, Loader2, Receipt } from "lucide-react";
+import { ArrowLeft, Trash2, Plus, Filter, Calendar as CalendarIcon, Loader2, Receipt, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
     Select,
     SelectContent,
@@ -15,6 +17,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
+} from "@/components/ui/dialog";
 
 interface Expense {
     id: string;
@@ -48,6 +57,15 @@ export default function ExpensesPage({
     const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
     const [selectedCategory, setSelectedCategory] = useState<string>("all");
     const [deletingId, setDeletingId] = useState<string | null>(null);
+    // 수정 관련 상태
+    const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
+    const [editForm, setEditForm] = useState({
+        amount: 0,
+        category: "",
+        vendor_name: "",
+        description: "",
+    });
+    const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
         params.then((p) => setProjectId(p.id));
@@ -114,6 +132,56 @@ export default function ExpensesPage({
             });
         } finally {
             setDeletingId(null);
+        }
+    };
+
+    // 수정 모달 열기
+    const handleEditOpen = (expense: Expense) => {
+        setEditingExpense(expense);
+        setEditForm({
+            amount: expense.amount,
+            category: expense.category,
+            vendor_name: expense.vendor_name || "",
+            description: expense.description || "",
+        });
+    };
+
+    // 수정 저장
+    const handleEditSave = async () => {
+        if (!editingExpense) return;
+
+        setIsSaving(true);
+        try {
+            const response = await fetch(`/api/expenses/${editingExpense.id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(editForm),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                // 목록 업데이트
+                setExpenses(expenses.map((e) =>
+                    e.id === editingExpense.id
+                        ? { ...e, ...editForm }
+                        : e
+                ));
+                setEditingExpense(null);
+                toast({
+                    title: "수정 완료",
+                    description: "지출 내역이 수정되었습니다.",
+                });
+            } else {
+                throw new Error("수정 실패");
+            }
+        } catch (error) {
+            toast({
+                title: "수정 오류",
+                description: "지출 내역을 수정하지 못했습니다.",
+                variant: "destructive",
+            });
+        } finally {
+            setIsSaving(false);
         }
     };
 
@@ -247,10 +315,18 @@ export default function ExpensesPage({
                                             </div>
                                         </div>
 
-                                        <div className="flex items-center gap-4 pl-4 flex-shrink-0">
+                                        <div className="flex items-center gap-2 pl-4 flex-shrink-0">
                                             <span className="font-bold text-lg">
                                                 {expense.amount.toLocaleString()}원
                                             </span>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="text-gray-400 hover:text-blue-600"
+                                                onClick={() => handleEditOpen(expense)}
+                                            >
+                                                <Pencil className="h-4 w-4" />
+                                            </Button>
                                             <Button
                                                 variant="ghost"
                                                 size="icon"
@@ -272,6 +348,69 @@ export default function ExpensesPage({
                     )}
                 </div>
             </main>
+
+            {/* 수정 모달 */}
+            <Dialog open={!!editingExpense} onOpenChange={(open: boolean) => !open && setEditingExpense(null)}>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>지출 내역 수정</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                        <div className="grid gap-2">
+                            <Label htmlFor="amount">금액</Label>
+                            <Input
+                                id="amount"
+                                type="number"
+                                value={editForm.amount}
+                                onChange={(e) => setEditForm({ ...editForm, amount: Number(e.target.value) })}
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="category">카테고리</Label>
+                            <Select
+                                value={editForm.category}
+                                onValueChange={(value) => setEditForm({ ...editForm, category: value })}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="카테고리 선택" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {CATEGORIES.filter(c => c.value !== "all").map((cat) => (
+                                        <SelectItem key={cat.value} value={cat.value}>
+                                            {cat.label}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="vendor_name">거래처</Label>
+                            <Input
+                                id="vendor_name"
+                                value={editForm.vendor_name}
+                                onChange={(e) => setEditForm({ ...editForm, vendor_name: e.target.value })}
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="description">메모</Label>
+                            <Input
+                                id="description"
+                                value={editForm.description}
+                                onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                            />
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setEditingExpense(null)}>
+                            취소
+                        </Button>
+                        <Button onClick={handleEditSave} disabled={isSaving}>
+                            {isSaving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                            저장
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }

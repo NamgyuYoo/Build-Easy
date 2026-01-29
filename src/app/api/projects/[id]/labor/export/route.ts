@@ -18,12 +18,20 @@ export async function GET(
     }
 
     // Verify project ownership
-    const { data: project } = await supabase
+    const { data: project, error: projectError } = await supabase
       .from("projects")
       .select("*")
       .eq("id", id)
       .eq("user_id", user.id)
       .single();
+
+    if (projectError) {
+      console.error("Project fetch error:", projectError);
+      return NextResponse.json(
+        { error: "프로젝트 조회 중 오류가 발생했습니다" },
+        { status: 500 }
+      );
+    }
 
     if (!project) {
       return NextResponse.json(
@@ -34,15 +42,26 @@ export async function GET(
 
     // Get current month's labor logs
     const now = new Date();
-    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
-    const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const lastDayNum = new Date(year, now.getMonth() + 1, 0).getDate();
+    const firstDay = `${year}-${month}-01`;
+    const lastDay = `${year}-${month}-${String(lastDayNum).padStart(2, "0")}`;
 
-    const { data: laborLogs } = await supabase
+    const { data: laborLogs, error: logsError } = await supabase
       .from("labor_logs")
       .select("*, workers(*)")
       .eq("project_id", id)
-      .gte("work_date", firstDay.toISOString())
-      .lte("work_date", lastDay.toISOString());
+      .gte("work_date", firstDay)
+      .lte("work_date", lastDay);
+
+    if (logsError) {
+      console.error("Labor logs fetch error:", logsError);
+      return NextResponse.json(
+        { error: "노무 기록 조회 중 오류가 발생했습니다" },
+        { status: 500 }
+      );
+    }
 
     // Generate CSV
     const headers = [
@@ -100,13 +119,20 @@ export async function GET(
     const bom = "\uFEFF";
     const csvWithBom = bom + csvContent;
 
+    // 파일명 생성 (한글은 URL 인코딩)
+    const safeProjectName = (project.name || "project").replace(/[^a-zA-Z0-9가-힣_\-]/g, "_");
+    const fileName = `labor_log_${safeProjectName}_${year}${month}.csv`;
+    const encodedFileName = encodeURIComponent(fileName);
+
     return new NextResponse(csvWithBom, {
       headers: {
         "Content-Type": "text/csv; charset=utf-8",
-        "Content-Disposition": `attachment; filename="labor_log_${project.name}_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, "0")}.csv"`,
+        // RFC 5987 형식으로 한글 파일명 지원
+        "Content-Disposition": `attachment; filename="labor_log_${year}${month}.csv"; filename*=UTF-8''${encodedFileName}`,
       },
     });
   } catch (error) {
+    console.error("CSV Export error:", error);
     return NextResponse.json(
       { error: "노무비 대장 내보내기 중 오류가 발생했습니다" },
       { status: 500 }

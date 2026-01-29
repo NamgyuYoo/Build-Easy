@@ -39,15 +39,17 @@ export default async function LaborPage({
 
   // Fetch labor logs for current month
   const now = new Date();
-  const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
-  const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const firstDay = `${year}-${month}-01`;
+  const lastDay = `${year}-${month}-${new Date(year, now.getMonth() + 1, 0).getDate()}`;
 
   const { data: laborLogs } = await supabase
     .from("labor_logs")
     .select("*, workers(*)")
     .eq("project_id", id)
-    .gte("work_date", firstDay.toISOString())
-    .lte("work_date", lastDay.toISOString());
+    .gte("work_date", firstDay)
+    .lte("work_date", lastDay);
 
   // Calculate monthly summary
   let totalFullDays = 0;
