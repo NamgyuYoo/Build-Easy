@@ -127,6 +127,40 @@
   --radius: 0.5rem;
 }
 
+/*
+ * ADAPTIVE CSS INFRASTRUCTURE
+ *
+ * This section implements the Phase 2 adaptive system for touch/mouse detection
+ * and minimum touch target enforcement per WCAG 2.5.8 and CLAUDE.md requirements.
+ *
+ * HOVER GUARDS:
+ * - Use `hover-capable:` variant instead of `hover:` for all interactive elements
+ * - Prevents sticky hover states on touch devices (no double-tap required)
+ * - Example: `<button class="hover-capable:bg-blue-600 bg-blue-500">Save</button>`
+ *
+ * TOUCH TARGETS:
+ * - .touch-safe: 44px minimum (WCAG AA compliant)
+ * - .touch-primary: 56px minimum (gloves-on mode per CLAUDE.md)
+ * - .input-safe: 48px minimum (input fields per CLAUDE.md)
+ * - Utility classes CANNOT override minimums (enforced via !important)
+ * - Example: `<button class="touch-primary h-10">Save</button>` (renders at 56px)
+ *
+ * POINTER VARIANTS (Tailwind v4.1.18+):
+ * - pointer-coarse: Touch devices (apply larger sizes)
+ * - pointer-fine: Mouse devices (apply normal sizes)
+ * - Example: `<button class="pointer-coarse:h-14 pointer-fine:h-10">Adaptive</button>`
+ *
+ * CONSTRUCTION-OPTIMIZED COLORS (02-RESEARCH.md Pattern 5):
+ * - Category colors use higher chroma for bright sunlight visibility
+ * - Blue (자재비): oklch(0.60 0.24 264) - brighter, more saturated
+ * - Orange (노무비): oklch(0.70 0.20 45) - excellent sunlight visibility
+ * - Green (식대): oklch(0.70 0.18 145) - stands out in bright light
+ * - Red (유류비): oklch(0.60 0.24 25) - higher chroma for outdoor use
+ * - All colors maintain 6:1+ contrast for outdoor readability
+ *
+ * See .planning/phases/02-adaptive-css-infrastructure/02-RESEARCH.md for details.
+ */
+
 /* Touch target enforcement (utilities cannot override minimums) */
 @layer components {
   /* Standard touch target - WCAG 2.5.8 compliant (44px minimum) */
