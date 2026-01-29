@@ -87,23 +87,23 @@
 | RESP-04 | Phase 2 | Pending |
 | ADAP-01 | Phase 2 | Pending |
 | ADAP-02 | Phase 2 | Pending |
-| ADAP-03 | Phase 4 | Pending |
+| ADAP-03 | Phase 5 | Pending |
 | DSYS-01 | Phase 1 | Pending |
 | DSYS-02 | Phase 1 | Pending |
 | DSYS-03 | Phase 3 | Pending |
-| MICRO-01 | Phase 5 | Pending |
+| MICRO-01 | Phase 6 | Pending |
 | MICRO-02 | Phase 6 | Pending |
 | MICRO-03 | Phase 6 | Pending |
 | POLISH-01 | Phase 1 | Pending |
 | POLISH-02 | Phase 1 | Pending |
 | POLISH-03 | Phase 1 | Pending |
 | POLISH-04 | Phase 7 | Pending |
-| NAV-01 | Phase 3 | Pending |
-| NAV-02 | Phase 3 | Pending |
+| NAV-01 | Phase 4 | Pending |
+| NAV-02 | Phase 4 | Pending |
 | NAV-03 | Phase 4 | Pending |
 | ANTI-01 | Phase 2 | Pending |
 | ANTI-02 | Phase 2 | Pending |
-| ANTI-03 | Phase 3 | Pending |
+| ANTI-03 | Phase 4 | Pending |
 | ANTI-04 | All Phases | Pending |
 
 **Coverage:**
@@ -113,4 +113,4 @@
 
 ---
 *Requirements defined: 2026-01-29*
-*Last updated: 2026-01-29 after initial definition*
+*Last updated: 2026-01-29 after roadmap creation*
