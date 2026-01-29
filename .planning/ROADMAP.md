@@ -37,12 +37,12 @@ Decimal phases appear between their surrounding integers in numeric order.
 4. Spacing and typography scales are consistent across all existing screens
 5. Loading states display skeleton screens during async operations
 
-**Plans**: TBD
+**Plans**: 3 plans in 2 waves
 
 Plans:
-- [ ] 01-01: Configure Tailwind CSS v4 @theme block with base tokens
-- [ ] 01-02: Define semantic token layer (primary, secondary, muted, etc.)
-- [ ] 01-03: Create accessible color system with WCAG AA validation
+- [ ] 01-01-PLAN.md — Configure complete @theme block with category colors, spacing, typography, shadows, and Inter font variable
+- [ ] 01-02-PLAN.md — Install react-loading-skeleton and create skeleton components (card, table, list)
+- [ ] 01-03-PLAN.md — Validate WCAG AA contrast for all color combinations with human verification
 
 ### Phase 2: Adaptive CSS Infrastructure
 
@@ -185,7 +185,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Design Token Foundation | 0/TBD | Not started | - |
+| 1. Design Token Foundation | 0/3 | Ready to execute | - |
 | 2. Adaptive CSS Infrastructure | 0/TBD | Not started | - |
 | 3. Component Architecture | 0/TBD | Not started | - |
 | 4. Navigation & Layout | 0/TBD | Not started | - |
