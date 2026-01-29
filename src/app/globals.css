@@ -28,12 +28,12 @@
   --color-category-fuel-500: oklch(0.55 0.22 25);
   --color-category-fuel-700: oklch(0.45 0.20 25);
 
-  /* Semantic tokens map to category colors */
-  --color-primary: var(--color-category-material-500);
-  --color-success: var(--color-category-food-500);
+  /* Semantic tokens (explicit values for Tailwind v4) */
+  --color-primary: oklch(0.55 0.22 264);
+  --color-success: oklch(0.65 0.18 145);
   --color-warning: oklch(0.80 0.15 85);
-  --color-error: var(--color-category-fuel-500);
-  --color-info: var(--color-category-material-500);
+  --color-error: oklch(0.55 0.22 25);
+  --color-info: oklch(0.55 0.22 264);
 
   /* Base colors */
   --color-primary-foreground: oklch(0.985 0.002 253.1);
@@ -54,6 +54,62 @@
   --color-card-foreground: oklch(0.145 0.011 253.1);
   --color-popover: oklch(1 0 0);
   --color-popover-foreground: oklch(0.145 0.011 253.1);
+
+  /* Spacing Scale (4px base unit) */
+  --spacing-0: 0;
+  --spacing-px: 1px;
+  --spacing-0_5: 0.125rem;   /* 2px */
+  --spacing-1: 0.25rem;      /* 4px */
+  --spacing-1_5: 0.375rem;   /* 6px */
+  --spacing-2: 0.5rem;       /* 8px */
+  --spacing-2_5: 0.625rem;   /* 10px */
+  --spacing-3: 0.75rem;      /* 12px */
+  --spacing-3_5: 0.875rem;   /* 14px - min text size */
+  --spacing-4: 1rem;         /* 16px - min touch target */
+  --spacing-5: 1.25rem;      /* 20px */
+  --spacing-6: 1.5rem;       /* 24px - component padding */
+  --spacing-7: 1.75rem;      /* 28px */
+  --spacing-8: 2rem;         /* 32px */
+  --spacing-9: 2.25rem;      /* 36px */
+  --spacing-10: 2.5rem;      /* 40px */
+  --spacing-11: 2.75rem;     /* 44px - WCAG touch target */
+  --spacing-12: 3rem;        /* 48px - min button height */
+  --spacing-14: 3.5rem;      /* 56px - gloves-on button */
+  --spacing-16: 4rem;        /* 64px - section spacing */
+  --spacing-20: 5rem;        /* 80px */
+  --spacing-24: 6rem;        /* 96px */
+
+  /* Typography Scale (1.333 ratio - perfect fourth) */
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px - gloves-on min */
+  --font-size-base: 1rem;       /* 16px - body text */
+  --font-size-lg: 1.333rem;     /* 21.33px - subtitle */
+  --font-size-xl: 1.777rem;     /* 28.44px - h3 */
+  --font-size-2xl: 2.369rem;    /* 37.9px - h2 */
+  --font-size-3xl: 3.157rem;    /* 50.5px - h1 */
+  --font-size-4xl: 4.209rem;    /* 67.3px - display */
+
+  /* Line heights - generous for readability */
+  --leading-xs: 1rem;           /* 16px */
+  --leading-sm: 1.25rem;        /* 20px */
+  --leading-base: 1.6rem;       /* 25.6px - 1.6 ratio */
+  --leading-lg: 1.75rem;        /* 28px */
+  --leading-xl: 2rem;           /* 32px */
+  --leading-2xl: 2.5rem;        /* 40px */
+  --leading-3xl: 3rem;          /* 48px */
+
+  /* Border Radius (modern SaaS convention) */
+  --radius-sm: 0.25rem;         /* 4px */
+  --radius-md: 0.375rem;        /* 6px */
+  --radius-lg: 0.5rem;          /* 8px - default */
+  --radius-xl: 0.75rem;         /* 12px */
+  --radius-2xl: 1rem;           /* 16px */
+
+  /* Shadows (subtle, professional) */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
   --radius: 0.5rem;
 }
