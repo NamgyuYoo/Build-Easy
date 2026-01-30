@@ -60,40 +60,49 @@ ALTER TABLE expenses ENABLE ROW LEVEL SECURITY;
 ALTER TABLE labor_logs ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for projects
+DROP POLICY IF EXISTS "Users can view their own projects" ON projects;
 CREATE POLICY "Users can view their own projects"
   ON projects FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert their own projects" ON projects;
 CREATE POLICY "Users can insert their own projects"
   ON projects FOR INSERT
   WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can update their own projects" ON projects;
 CREATE POLICY "Users can update their own projects"
   ON projects FOR UPDATE
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can delete their own projects" ON projects;
 CREATE POLICY "Users can delete their own projects"
   ON projects FOR DELETE
   USING (auth.uid() = user_id);
 
 -- RLS Policies for workers
+DROP POLICY IF EXISTS "Users can view their own workers" ON workers;
 CREATE POLICY "Users can view their own workers"
   ON workers FOR SELECT
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert their own workers" ON workers;
 CREATE POLICY "Users can insert their own workers"
   ON workers FOR INSERT
   WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can update their own workers" ON workers;
 CREATE POLICY "Users can update their own workers"
   ON workers FOR UPDATE
   USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can delete their own workers" ON workers;
 CREATE POLICY "Users can delete their own workers"
   ON workers FOR DELETE
   USING (auth.uid() = user_id);
 
 -- RLS Policies for expenses (via project ownership)
+DROP POLICY IF EXISTS "Users can view expenses from their projects" ON expenses;
 CREATE POLICY "Users can view expenses from their projects"
   ON expenses FOR SELECT
   USING (
@@ -104,6 +113,7 @@ CREATE POLICY "Users can view expenses from their projects"
     )
   );
 
+DROP POLICY IF EXISTS "Users can insert expenses to their projects" ON expenses;
 CREATE POLICY "Users can insert expenses to their projects"
   ON expenses FOR INSERT
   WITH CHECK (
@@ -114,6 +124,7 @@ CREATE POLICY "Users can insert expenses to their projects"
     )
   );
 
+DROP POLICY IF EXISTS "Users can update expenses in their projects" ON expenses;
 CREATE POLICY "Users can update expenses in their projects"
   ON expenses FOR UPDATE
   USING (
@@ -124,6 +135,7 @@ CREATE POLICY "Users can update expenses in their projects"
     )
   );
 
+DROP POLICY IF EXISTS "Users can delete expenses from their projects" ON expenses;
 CREATE POLICY "Users can delete expenses from their projects"
   ON expenses FOR DELETE
   USING (
@@ -135,6 +147,7 @@ CREATE POLICY "Users can delete expenses from their projects"
   );
 
 -- RLS Policies for labor_logs (via project ownership)
+DROP POLICY IF EXISTS "Users can view labor logs from their projects" ON labor_logs;
 CREATE POLICY "Users can view labor logs from their projects"
   ON labor_logs FOR SELECT
   USING (
@@ -145,6 +158,7 @@ CREATE POLICY "Users can view labor logs from their projects"
     )
   );
 
+DROP POLICY IF EXISTS "Users can insert labor logs to their projects" ON labor_logs;
 CREATE POLICY "Users can insert labor logs to their projects"
   ON labor_logs FOR INSERT
   WITH CHECK (
@@ -155,6 +169,7 @@ CREATE POLICY "Users can insert labor logs to their projects"
     )
   );
 
+DROP POLICY IF EXISTS "Users can update labor logs in their projects" ON labor_logs;
 CREATE POLICY "Users can update labor logs in their projects"
   ON labor_logs FOR UPDATE
   USING (
@@ -165,6 +180,7 @@ CREATE POLICY "Users can update labor logs in their projects"
     )
   );
 
+DROP POLICY IF EXISTS "Users can delete labor logs from their projects" ON labor_logs;
 CREATE POLICY "Users can delete labor logs from their projects"
   ON labor_logs FOR DELETE
   USING (
@@ -193,22 +209,55 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Create triggers for updated_at
+DROP TRIGGER IF EXISTS update_projects_updated_at ON projects;
 CREATE TRIGGER update_projects_updated_at
   BEFORE UPDATE ON projects
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_workers_updated_at ON workers;
 CREATE TRIGGER update_workers_updated_at
   BEFORE UPDATE ON workers
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_expenses_updated_at ON expenses;
 CREATE TRIGGER update_expenses_updated_at
   BEFORE UPDATE ON expenses
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_labor_logs_updated_at ON labor_logs;
 CREATE TRIGGER update_labor_logs_updated_at
   BEFORE UPDATE ON labor_logs
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
+
+-- =================================================================
+-- STORAGE SETUP (Receipts)
+-- =================================================================
+
+-- 1. 'receipts' 버킷 생성 (이미 있으면 설정만 업데이트)
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES ('receipts', 'receipts', true, 10485760, ARRAY['image/*'])
+ON CONFLICT (id) DO UPDATE SET
+    public = EXCLUDED.public,
+    file_size_limit = EXCLUDED.file_size_limit,
+    allowed_mime_types = EXCLUDED.allowed_mime_types;
+
+-- 2. 기존 스토리지 정책이 있다면 삭제 (중복 방지)
+DROP POLICY IF EXISTS "Authenticated users can upload receipts" ON storage.objects;
+DROP POLICY IF EXISTS "Public can view receipts" ON storage.objects;
+
+-- 3. 새로운 정책 추가
+-- 로그인한 사용자가 'receipts' 버킷에 파일을 올릴 수 있도록 허용
+CREATE POLICY "Authenticated users can upload receipts"
+ON storage.objects FOR INSERT
+TO authenticated
+WITH CHECK ( bucket_id = 'receipts' AND auth.role() = 'authenticated' );
+
+-- 누구나 'receipts' 버킷의 파일을 볼 수 있도록 허용 (이미지 미리보기용)
+CREATE POLICY "Public can view receipts"
+ON storage.objects FOR SELECT
+TO public
+USING ( bucket_id = 'receipts' );
